@@ -1,0 +1,18 @@
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.log
+
+# Virtual Environments
+venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Coverage
+.coverage
+htmlcov/
