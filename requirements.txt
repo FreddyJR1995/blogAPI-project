@@ -1,7 +1,10 @@
+fastapi
+uvicorn
 sqlalchemy
 python-dotenv
 psycopg2-binary 
 pydantic
 bcrypt
 PyJWT
-python-jose
+python-jose 
+passlib
