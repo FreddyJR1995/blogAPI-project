@@ -24,4 +24,6 @@ Base = declarative_base()
 
 def init_db():
     import app.models.user
+    import app.models.article
+    import app.models.label
     Base.metadata.create_all(bind=engine)
