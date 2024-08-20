@@ -8,3 +8,7 @@ bcrypt
 PyJWT
 python-jose 
 passlib
+pytest
+pytest-cov
+alembic
+requests

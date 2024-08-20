@@ -8,17 +8,11 @@ from app.schemas.token import token as token_schema
 from app.schemas.auth import auth as auth_schema
 from app.core.config.config import ACCESS_TOKEN_EXPIRE_MINUTES
 from app.core.security.security import create_access_token
+from app.utils.db import get_db
 
 router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/auth/token")
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/login", response_model=token_schema.Token)
 def login(form_data: auth_schema.LoginForm, db: Session = Depends(get_db)):
