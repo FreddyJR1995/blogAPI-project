@@ -6,6 +6,7 @@ from app.models import init_db
 from app.routers.user import user
 from app.routers.auth import auth
 from app.routers.article import article
+from app.routers.label import label
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -34,3 +35,4 @@ app.include_router(user.router, prefix="/api/v1")
 app.include_router(user.router, prefix="/api/v1/users", tags=["users"])
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
 app.include_router(article.router, prefix="/api/v1", tags=["articles"])
+app.include_router(label.router, prefix="/api/v1", tags=["labels"])
