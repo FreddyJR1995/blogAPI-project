@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.models.article.article import Article
 from app.models.label.label import Label
 from app.schemas.article.article import ArticleCreate, ArticleUpdate
@@ -6,10 +6,14 @@ from app.models.user.user import User
 from fastapi import HTTPException, status
 
 def get_all_articles_except_user_articles(db: Session, user_id: int, skip: int = 0, limit: int = 10):
-    return db.query(Article).filter(Article.author_id != user_id).offset(skip).limit(limit).all()
+    articles = db.query(Article).filter(Article.author_id != user_id).options(joinedload(Article.author)).offset(skip).limit(limit).all()
+    return articles
 
 def get_articles_by_user(db: Session, user_id: int):
-    return db.query(Article).filter(Article.author_id == user_id).all()
+    return db.query(Article).filter(Article.author_id == user_id).options(joinedload(Article.author)).all()
+
+def get_article_by_id(db: Session, id: int):
+    return db.query(Article).filter(Article.id == id).options(joinedload(Article.author)).first()
 
 def create_article(db: Session, article: ArticleCreate, current_user: User):
     db_article = Article(title=article.title, content=article.content, author_id=current_user.id)

@@ -1,6 +1,7 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Type
 from app.schemas.label.label import Label, LabelCreate
+from app.schemas.user.user_base import UserBase
 
 class ArticleBase(BaseModel):
     title: str
@@ -19,6 +20,7 @@ class ArticleUpdate(ArticleBase):
 class Article(ArticleBase):
     id: int
     labels: List[Label] = []
+    author: UserBase
 
     class Config:
         orm_mode = True

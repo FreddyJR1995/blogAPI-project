@@ -1,19 +1,14 @@
 from pydantic import BaseModel
 from typing import List
 from app.schemas.article.article import Article
-
-class UserBase(BaseModel):
-    name: str
-    last_name:str
-    email: str
-    password: str
+from app.schemas.user.user_base import UserBase
 
 class UserCreate(UserBase):
-    pass
+    password: str
 
 class User(UserBase):
     id: int
     articles: List[Article] = []
 
     class Config:
-        orm_mode: True
+        orm_mode = True
