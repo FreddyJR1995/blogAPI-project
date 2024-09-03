@@ -7,7 +7,8 @@ from fastapi import HTTPException, status
 
 def get_all_articles_except_user_articles(db: Session, user_id: int, skip: int = 0, limit: int = 10):
     articles = db.query(Article).filter(Article.author_id != user_id).options(joinedload(Article.author)).offset(skip).limit(limit).all()
-    return articles
+    total_articles = db.query(Article).filter(Article.author_id != user_id).count()
+    return {"articles": articles, "total_articles": total_articles}
 
 def get_articles_by_user(db: Session, user_id: int):
     return db.query(Article).filter(Article.author_id == user_id).options(joinedload(Article.author)).all()
