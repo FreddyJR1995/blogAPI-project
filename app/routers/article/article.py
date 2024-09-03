@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Dict, Any
 from app.schemas.article.article import Article, ArticleCreate, ArticleUpdate
 from app.models.user.user import User
 from app.utils.db import get_db
@@ -16,10 +16,23 @@ from app.services.article.article import (
 
 router = APIRouter()
 
-@router.get("/articles/", response_model=List[Article])
+@router.get("/articles/", response_model=Dict[str, Any])
 def fetch_all_articles_except_user_articles(skip: int = 0, limit: int = 10, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    articles = get_all_articles_except_user_articles(db, current_user.id, skip, limit)
-    return articles
+    result = get_all_articles_except_user_articles(db, current_user.id, skip, limit)
+    articles = result["articles"]
+    total_articles = result["total_articles"]
+    pages =(total_articles + limit - 1) // limit
+    article = articles[0]
+    try:
+        return {
+            "total": total_articles,
+            "articles": [Article.from_orm(article) for article in articles],
+            "page": skip // limit + 1,
+            "pages": pages,
+        }
+    except Exception as e:
+        print(f"Error loading articles: {e}")
+    
 
 @router.get("/articles/user/", response_model=List[Article])
 def fetch_articles_by_user(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
