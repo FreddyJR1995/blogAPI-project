@@ -23,7 +23,8 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 def init_db():
-    import app.models.user
-    import app.models.article
-    import app.models.label
+    from app.models.user import user
+    from app.models.article import article
+    from app.models.label import label
+    from app.models.comment import comment
     Base.metadata.create_all(bind=engine)

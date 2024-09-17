@@ -1,12 +1,13 @@
 from pydantic import BaseModel
 from typing import List, Optional, Type
+from uuid import UUID
 from app.schemas.label.label import Label, LabelCreate
 from app.schemas.user.user_base import UserBase
 
 class ArticleBase(BaseModel):
     title: str
     content: str
-    author_id: int
+    author_id: UUID
 
 class ArticleCreate(BaseModel):
     title: str
@@ -18,7 +19,7 @@ class ArticleUpdate(ArticleBase):
     content: Optional[str] = None
 
 class Article(ArticleBase):
-    id: int
+    id: UUID
     labels: List[Label] = []
     author: UserBase
 

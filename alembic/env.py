@@ -5,6 +5,7 @@ from app.models import Base
 from app.models.user import user
 from app.models.article import article
 from app.models.label import label
+from app.models.comment import comment
 import os
 from dotenv import load_dotenv
 

@@ -55,7 +55,8 @@ _Finally, a paragraph with some underlined text and **bold text** together_.
         )
         session.add(article)
 
-        labels = session.query(Label).filter(Label.id.in_([1, 2, 3])).all()
+        labels = session.query(Label).limit(3).all()
+        
         article.labels.extend(labels)
 
     session.commit()
