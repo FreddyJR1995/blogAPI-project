@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from app.models import Base
-from app.models.article.article import article_label_association
+from app.models.article_label.article_label import article_label_association
 
 class Label(Base):
     __tablename__ = 'labels'

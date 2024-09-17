@@ -4,9 +4,10 @@ from app.services.user.user import get_user, get_user_by_email, create_user, aut
 from app.models.user.user import User
 from app.schemas.user.user import UserCreate
 from sqlalchemy.orm import Session
+import uuid
 
 mock_user_data = {
-    "id": 1,
+    "id": uuid.uuid4(),
     "name": "John",
     "last_name": "Doe",
     "email": "john.doe@example.com",
@@ -25,7 +26,7 @@ def test_get_user_found(mock_session):
     mock_user = MockUser(**mock_user_data)
     mock_session.query().filter().first.return_value = mock_user
     user = get_user(mock_session, 1)
-    assert user.id == 1
+    assert user.id == mock_user_data["id"]
     assert user.email == "john.doe@example.com"
 
 def test_get_user_not_found(mock_session):
@@ -38,7 +39,7 @@ def test_get_user_by_email_found(mock_session):
     mock_session.query().filter().first.return_value = mock_user
     user = get_user_by_email(mock_session, "john.doe@example.com")
     assert user.email == "john.doe@example.com"
-    assert user.id == 1
+    assert user.id == mock_user_data["id"]
 
 def test_get_user_by_email_not_found(mock_session):
     mock_session.query().filter().first.return_value = None
