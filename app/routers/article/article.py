@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List, Dict, Any
+from uuid import UUID
 from app.schemas.article.article import Article, ArticleCreate, ArticleUpdate
 from app.models.user.user import User
 from app.utils.db import get_db
@@ -39,7 +40,7 @@ def fetch_articles_by_user(db: Session = Depends(get_db), current_user: User = D
     return get_articles_by_user(db, current_user.id)
 
 @router.get("/articles/{article_id}", response_model=Article)
-def fetch_article_by_id(article_id: int, db: Session= Depends(get_db)):
+def fetch_article_by_id(article_id: UUID, db: Session= Depends(get_db)):
     return get_article_by_id(db, article_id)
 
 @router.post("/articles/", response_model=Article)
@@ -47,9 +48,9 @@ def create_new_article(article: ArticleCreate, db: Session = Depends(get_db), cu
     return create_article(db, article, current_user)
 
 @router.put("/articles/{article_id}", response_model=Article)
-def modify_article(article_id: int, article: ArticleUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def modify_article(article_id: UUID, article: ArticleUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return update_article(db, article_id, article, current_user)
 
 @router.delete("/articles/{article_id}", response_model=Article)
-def remove_article(article_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def remove_article(article_id: UUID, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return delete_article(db, article_id, current_user)
