@@ -7,13 +7,14 @@ from app.services.user import user as user_service
 from app.utils.db import get_db
 from app.core.security.security import verify_token
 from fastapi import HTTPException, status
+import uuid 
 
 user_data = {
     "email": "testuser@example.com",
     "password": "testpassword",
     "name": "Test",
     "last_name": "User",
-    "id": 1,
+    "id": uuid.uuid4(),
 }
 
 

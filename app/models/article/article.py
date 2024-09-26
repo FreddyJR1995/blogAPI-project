@@ -2,12 +2,9 @@ from sqlalchemy import Column, Integer, String, Text, ForeignKey, Table, DateTim
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from app.models import Base
+from app.models.label.label import Label
+from app.models.article_label.article_label import article_label_association
 
-article_label_association = Table(
-    'article_label', Base.metadata,
-    Column('article_id', UUID(as_uuid=True), ForeignKey('articles.id')),
-    Column('label_id', UUID(as_uuid=True), ForeignKey('labels.id'))
-)
 
 class Article(Base):
     __tablename__ = 'articles'

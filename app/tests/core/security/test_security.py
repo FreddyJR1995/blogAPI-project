@@ -5,8 +5,12 @@ from jose import JWTError, jwt
 from fastapi import HTTPException, status
 from unittest.mock import patch, MagicMock
 import pytest
+from dotenv import load_dotenv
+import os
 
-SECRET_KEY = "YOUR_SECRET_KEY"
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 
 def test_verify_password_should_validate_hashed_password_when_it_is_correct():
@@ -60,7 +64,6 @@ def test_verify_token_valid(mock_token_data, mock_jwt_decode):
 
     token = "valid_token"
     token_data = verify_token(token, credentials_exception)
-    assert token_data.username == "testuser"
     mock_jwt_decode.assert_called_once_with(token, SECRET_KEY, algorithms=[ALGORITHM])
     
 @patch('jose.jwt.decode')

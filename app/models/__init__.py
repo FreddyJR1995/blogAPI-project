@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base
 
 load_dotenv()
 
@@ -26,5 +26,6 @@ def init_db():
     from app.models.user import user
     from app.models.article import article
     from app.models.label import label
+    from app.models.article_label import article_label
     from app.models.comment import comment
     Base.metadata.create_all(bind=engine)

@@ -47,7 +47,7 @@ def fetch_article_by_id(article_id: UUID, db: Session= Depends(get_db)):
 def create_new_article(article: ArticleCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return create_article(db, article, current_user)
 
-@router.put("/articles/{article_id}", response_model=Article)
+@router.put("/articles/{article_id}", response_model=ArticleUpdate)
 def modify_article(article_id: UUID, article: ArticleUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return update_article(db, article_id, article, current_user)
 

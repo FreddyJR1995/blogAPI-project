@@ -2,6 +2,8 @@ from sqlalchemy import Column, Integer, String, DateTime, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from app.models import Base
+from app.models.article.article import Article
+from app.models.comment.comment import Comment
 
 class User(Base):
     __tablename__ = "users"

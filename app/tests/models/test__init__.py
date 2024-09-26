@@ -5,7 +5,7 @@ from unittest.mock import patch, MagicMock
 
 @patch("sqlalchemy.create_engine")
 @patch("sqlalchemy.orm.sessionmaker")
-@patch("sqlalchemy.ext.declarative.declarative_base")
+@patch("sqlalchemy.orm.declarative_base")
 @patch("dotenv.load_dotenv")
 @patch.dict(os.environ, {
     "DATABASE_HOST": "localhost",

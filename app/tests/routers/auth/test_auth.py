@@ -23,10 +23,15 @@ def test_login_should_return_token_when_credentials_are_correct(mock_get_db, moc
     mock_create_access_token.return_value = "mocked_token"
     
     form_data = auth_schema.LoginForm(email="user@example.com", password="correct_password")
-
     response = auth.login(form_data=form_data, db=mock_get_db())
+    expected_user = mock_authenticate_user.return_value["user"]
     
-    assert response == {"access_token": "mocked_token", "token_type": "bearer"}
+
+    assert response == {
+        "access_token": "mocked_token",
+        "token_type": "bearer",
+        "user": expected_user
+    }
     mock_authenticate_user.assert_called_once_with(mock_get_db(), "user@example.com", "correct_password")
     mock_create_access_token.assert_called_once_with(
         data={"sub": "user@example.com"},
