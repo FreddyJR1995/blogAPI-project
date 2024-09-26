@@ -14,10 +14,9 @@ class ArticleCreate(BaseModel):
     content: str
     labels: List[LabelCreate] = []
 
-class ArticleUpdate(ArticleBase):
-    title: Optional[str] = None
-    content: Optional[str] = None
-
+class ArticleUpdate(BaseModel):
+    title: str
+    content: str
 class Article(ArticleBase):
     id: UUID
     labels: List[Label] = []
